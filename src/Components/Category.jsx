@@ -1,38 +1,34 @@
-import PropTypes from 'prop-types';
+import { useApi } from '../Context/Api'
+import { useState } from 'react';
+import PropTypes from 'prop-types'
 
-function Category({ categories, onChange }) {
+function Category({ onCategoryChange }) {
 
-    //La funcion de este componente, es renderizar las categorias para filtrarlas segun la opcion que se seleccione.
-    //A traves de Props, traemos la informacion de categories y onChange, la cual toda la logica se encuentra en App.jsx
+    // Llamamos a uniqueCategories, en la cual ese dato se encuentra en el context
+    const { uniqueCategories } = useApi();
+    const [selectedCategory, setSelectedCategory] = useState('');
 
-    const handleCategoryChange = (selectedCategory) => {
-        if (selectedCategory === 'Todas las categorías') {
-            onChange("");
-        } else {
-            onChange(selectedCategory);
-        }
+    // Creamos un evento que lo que va hacer, es a la hora de seleccionar una categoria, va crear un evento para poder mostrar la categoria seleccionada.
+    const handleCategoryChange = (event) => {
+        const category = event.target.value;
+        setSelectedCategory(category);
+        onCategoryChange(category);
     };
+
+
     return (
-        <div>
-            <div>
-                <label>Filtrar por Categoría:</label>
-                <select onChange={(e) => handleCategoryChange(e.target.value)}>
-                    <option value="">Todas las categorías</option>
-                    {categories.map((category, index) => (
-                        <option key={index} value={category}>
-                            {category}
-                        </option>
-                    ))}
-                </select>
-            </div>
-        </div>
+        <select className="form-select" value={selectedCategory} onChange={handleCategoryChange}>
+            <option value="">Todas las Categorías</option>
+            {uniqueCategories.map((category) => (
+                <option key={category} value={category}>
+                    {category}
+                </option>
+            ))}
+        </select>
     );
 }
-
-
 Category.propTypes = {
-    categories: PropTypes.arrayOf(PropTypes.string).isRequired,
-    onChange: PropTypes.func.isRequired,
+    onCategoryChange: PropTypes.func.isRequired,
 };
 
 export default Category;

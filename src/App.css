@@ -8,38 +8,56 @@
 body{
     background-color: beige;
 }
-label{
-    margin-left: 20px;
-    font-weight: bold;
-}
-.App_container{
+.container{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;   
-}
-.container_products{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin: 3rem auto;
-    gap: 10px;
-}
-.Title{
-    text-align: center;
+    width: 80%;
     margin: 20px auto;
-    font-weight: 700;
 }
-.card_product{
-    width: 400px;
+.category_style{
+    width: 300px;
+    margin: 20px 0px 20px 0px;
+}
+.table{
     text-align: center;
-    background-color: white;
-    box-shadow: 1px 1px 8px black;
+    box-shadow: 1px 1px 10px black;
 }
-.img_product{
-    width: 250px;
-    margin: 10px auto;
-    border-bottom: 0.5px black solid;
-    padding: 10px;
+thead{
+    border-bottom: 3px solid black;
+}
+td{
+    font-size: 0.85rem;
+}
+button{
+    width: 100px;
+    background-color: rgb(83, 19, 19) !important;
+}
+
+/* Componente ProductsDetail */
+.container_detail{
+    width: 30%;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    margin: 20px auto;
+    box-shadow: 1px 1px 20px black;
+}
+.container_detail span{
+    font-weight: bold;
+}
+img{
+    width: 250px !important;
+    margin: 30px auto;
+}
+.btn_back{
+    margin: 20px auto auto 70px;
+    background-color: rgb(114, 114, 39) !important; 
+}
+/* Componente Loading*/
+.container_spinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 250px;
 }

@@ -1,57 +1,23 @@
-import { useState, useEffect } from 'react';
 import './App.css'
-import Card from './Components/Card';
-import Category from './Components/Category';
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ApiProvider } from './Context/Api';
+import Products from './Components/Products.jsx'
+import ProductsDetail from './Components/ProductsDetail.jsx'
 
 function App() {
 
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [categoryFilter, setCategoryFilter] = useState('');
-
-  // A traves del Hook useEffect(), realizamos la llamada de la API a traves de fetch. Y realizamos un mapeo sobre las categorias que se encuentra en ellas.
-
-  useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        const uniqueCategories = [...new Set(data.map((product) => product.category))];
-        setCategories(uniqueCategories);
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
-
-  //Construimos una logica para poder filtrar las categorias, utilizando operario ternario.
-  const filteredProducts = categoryFilter
-    ? products.filter((product) => product.category === categoryFilter)
-    : products;
-
-  const handleCategoryFilter = (category) => {
-    setCategoryFilter(category);
-  };
-
-  //Creamos un evento para poder eliminar el producto a traves de .filter
-  
-  const handleDeleteProduct = (productId) => {
-    const updatedProducts = products.filter((product) => product.id !== productId);
-    setProducts(updatedProducts);
-  };
-
   return (
     <>
-      <div className="App_container">
-        <h1 className='Title'>Lista de productos</h1>
-        <Category categories={categories} onChange={handleCategoryFilter} />
-        <div className='container_products'>
-          {filteredProducts.map((product) => (
-            <div key={product.id}>
-              <Card product={product} onDelete={handleDeleteProduct} />
-            </div>
-          ))}
-        </div>
-      </div>
+    {/* En App podemos visualizar las rutas utilizando React-router marcando "/" en la ruta principal que seria como el index */}
+      <BrowserRouter>
+      {/* La funcion ApiProvider lo traemos de Api.jsx, en la cual contiene toda la logica y el llamado de la APi*/}
+        <ApiProvider>
+          <Routes>
+            <Route path="/" element={<Products />}/>
+            <Route path='/product/:id' element={<ProductsDetail />} />
+          </Routes>
+        </ApiProvider>
+      </BrowserRouter>
     </>
   )
 }
